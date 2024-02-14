@@ -66,6 +66,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    bcrypt (3.1.20)
     bootsnap (1.18.3)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -79,6 +80,10 @@ GEM
     ffi (1.16.3)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hirb (0.7.3)
+    hirb-unicode-steakknife (0.0.9)
+      hirb (~> 0.5)
+      unicode-display_width (~> 1.1)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.2)
@@ -165,6 +170,7 @@ GEM
     timeout (0.4.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    unicode-display_width (1.8.0)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -174,8 +180,11 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  bcrypt (~> 3.1.7)
   bootsnap
   debug
+  hirb (~> 0.7.3)
+  hirb-unicode-steakknife (~> 0.0.9)
   image_processing (~> 1.2)
   pg (~> 1.1)
   puma (~> 5.0)
