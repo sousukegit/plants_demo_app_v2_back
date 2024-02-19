@@ -6,7 +6,7 @@ class UserTest < ActiveSupport::TestCase
     @user = active_user    
   end
 
-  test "neme_validation" do
+  test "name_validation" do
 
     #入力必須
     user = User.new(email: "test@example.com", password: "password")

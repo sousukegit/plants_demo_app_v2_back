@@ -55,6 +55,7 @@ group :development do
   # gem "spring"
 end
 
+#追加
 group :test do
   gem 'minitest-reporters'
 end
