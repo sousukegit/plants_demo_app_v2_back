@@ -1,6 +1,9 @@
 
 
 class User < ApplicationRecord
+    #Token生成モジュールを追加
+    include TokenGenerateService
+    #バリデーション前にメールアドレスを小文字にする処理
     before_validation :downcase_email
 
     #gem bcript

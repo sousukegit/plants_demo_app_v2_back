@@ -1,8 +1,8 @@
 # api/app/services/token_generate_service.rb
 module TokenGenerateService
-    #モジュールの初期化処理
+    #モジュールの初期化処理(インクルードされるときに実行される処理)
     #include(モジュールを取り込むとき)の初期化処理実行場所（include先のオブジェクト）
-    #ここではユーザーオブジェクト
+    #ここではユーザーオブジェク
     def self.included(base)
       #baseはしようするクラスが入る
       #userクラスに定義したクラスメソッドをextendして
