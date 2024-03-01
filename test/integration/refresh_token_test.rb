@@ -2,6 +2,11 @@
 require "test_helper"
 
 class RefreshTokenTest < ActionDispatch::IntegrationTest
+
+  # test "set" do
+  #   db_set
+  # end
+
   def setup
     @user = active_user
     @encode = UserAuth::RefreshToken.new(user_id: @user.id)
@@ -11,6 +16,7 @@ class RefreshTokenTest < ActionDispatch::IntegrationTest
   # エンコード
   test "encode_token" do
     # payload[:exp]の値は想定通りか(1秒許容)
+db_set
     payload = @encode.payload
     expect_lifetime = @lifetime.from_now.to_i
     assert_in_delta expect_lifetime, payload[:exp], 1.second
@@ -27,6 +33,8 @@ class RefreshTokenTest < ActionDispatch::IntegrationTest
 
   # デコード
   test "decode_token" do
+
+check_userdb
     decode = UserAuth::RefreshToken.new(token: @encode.token)
     payload = decode.payload
 

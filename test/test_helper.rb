@@ -8,19 +8,30 @@ Minitest::Reporters.use!
 
 class ActiveSupport::TestCase
 
+
+
   # 追加
   # プロセスが分岐した直後に呼び出し
   parallelize_setup do |worker|
     load "#{Rails.root}/db/seeds.rb"
   end 
 
+  def db_set 
+    load "#{Rails.root}/db/seeds.rb"
+  end
+
   # 並列テストの有効化
   #workers プロセス数を渡す（2以上なら実行）
   # :number_of_processors マシンのコア数（docker） 240218では12コアだった
   parallelize(workers: :number_of_processors)
 
+  def check_userdb
+    puts User.all
+  end 
+
   def active_user
     User.find_by(activated: true)
+    puts User.all
   end
 
   # api path

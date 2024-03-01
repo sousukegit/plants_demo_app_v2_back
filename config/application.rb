@@ -36,9 +36,14 @@ module App
     # i18nで使われるデフォルトのロケールファイルの指定(default :en)
     config.i18n.default_locale = :ja
 
+     #Cookieを処理するミドルウェア
+     config.middleware.use ActionDispatch::Cookies
+
     # $LOAD_PATHにautoload pathを追加しない(Zeitwerk有効時false推奨)
     # config.add_autoload_paths_to_load_path = false
 
     config.api_only = true
+
+   
   end
 end
