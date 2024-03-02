@@ -40,7 +40,7 @@ class Api::V1::AuthTokenController < ApplicationController
    # params[:email]からアクティブなユーザーを返す
    def login_user
     #||=は変数の値が存在しない（nil）場合値を代入する演算子
-     @_login_user ||= User.find_by_activated(auth_params[:email])
+     @_login_user ||= User.find_activated(auth_params[:email])
    end
 
    # ログインユーザーが居ない、もしくはpasswordが一致しない場合404を返す
@@ -121,6 +121,8 @@ class Api::V1::AuthTokenController < ApplicationController
    end
 
    def auth_params
+     puts "Received data: #{params.inspect}"
+
      params.require(:auth).permit(:email, :password)
    end
 end
