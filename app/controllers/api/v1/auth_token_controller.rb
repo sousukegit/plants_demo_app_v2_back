@@ -54,10 +54,12 @@ class Api::V1::AuthTokenController < ApplicationController
 
    # refresh_tokenをcookieにセットする
    def set_refresh_token_to_cookie
+    puts("set_refresh_token_to_cookie")
      cookies[session_key] = {
        value: refresh_token,
        expires: refresh_token_expiration,
        #本番のみTrue.HTTPSのみ受け入れるか
+       #secure: true,
        secure: Rails.env.production?,
        #クッキーにアクセスできないようにする
        http_only: true
@@ -90,7 +92,7 @@ class Api::V1::AuthTokenController < ApplicationController
 
    # アクセストークンのインスタンス生成
    def encode_access_token
-     @_encode_access_token ||= @user.encode_access_token
+     @_encode_access_token ||= @user.encode_access_token  
    end
 
    # アクセストークン
