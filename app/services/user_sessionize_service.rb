@@ -14,16 +14,14 @@ module UserSessionizeService
   
     # セッションcookieを削除する
     def delete_session
-      cookies.delete(session_key)
+      cookies.delete(session_key,secure: true)
+puts("delete")
     end
   
     private
   
       # cookieのtokenを取得
       def token_from_cookies
-        puts("cookies")
-        puts(cookies[:mode])
-        Rails.logger.info cookies.inspect
         cookies[session_key]
         
       end
@@ -41,9 +39,7 @@ module UserSessionizeService
   
       # refresh_tokenのユーザーを返す
       def session_user
-puts("aaaaaa")
         return nil unless token_from_cookies
-puts("bbbbbb")
         @_session_user ||= fetch_user_from_refresh_token
       end
   

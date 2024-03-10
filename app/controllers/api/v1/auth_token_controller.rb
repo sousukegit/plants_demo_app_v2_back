@@ -58,9 +58,11 @@ class Api::V1::AuthTokenController < ApplicationController
      cookies[session_key] = {
        value: refresh_token,
        expires: refresh_token_expiration,
-       #本番のみTrue.HTTPSのみ受け入れるか
-       #secure: true,
-       secure: Rails.env.production?,
+       #本番のみTrue.HTTPSのみ受け入れるか       
+       #samesite属性をnoneにしたとき,secure属性をtrueにしないと受け渡しができない　20240304
+       #https://qiita.com/nakanishi03/items/dee8ae104635b2d1aff0
+       secure: true,
+      #  secure: Rails.env.production?,
        #クッキーにアクセスできないようにする
        http_only: true
      }

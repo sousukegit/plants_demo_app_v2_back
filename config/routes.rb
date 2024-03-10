@@ -5,7 +5,7 @@ Rails.application.routes.draw do
       # api test action
       resources :hello, only:[:index]
       #users_controller
-      resources :users, only:[:index]
+      resources :users, only:[:index,:create]
       #auth_token
       resources :auth_token, only:[:create] do
         post :refresh, on: :collection 
