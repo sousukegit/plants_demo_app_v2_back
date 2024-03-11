@@ -4,6 +4,15 @@ Rails.application.routes.draw do
     namespace :v1 do
       # api test action
       resources :hello, only:[:index]
+      #users_controller
+      resources :users, only:[:index,:create]
+      #auth_token
+      resources :auth_token, only:[:create] do
+        post :refresh, on: :collection 
+        delete :destroy, on: :collection        
+      end
+      #projects
+      resources :projects, only:[:index] 
     end
   end
 end
