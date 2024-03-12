@@ -8,7 +8,8 @@ class Api::V1::UsersController < ApplicationController
     def create
         puts(params)
         @user = User.new(user_params)
-        #メール認証の設計にしていたが、スキップする
+        #メール認証の設計にしていたが、activatedをいれてスキップする
+        #セキュリティ上げる際に実装でもいいが、まずはユーザー体験を優先してみる
         @user.activated = true        
         if @user.save
             render json: { message: 'User created successfully' }, status: :created
