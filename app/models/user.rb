@@ -11,6 +11,9 @@ class User < ApplicationRecord
     #authenticate（）でパスワード変換して正しいパスか判定してくれる
     #入力必須バリデーションチェックが新規の時のみ有効
     has_secure_password
+
+    #1ユーザーに対して複数のレビュー
+    has_many :reviews
     
     #追加
     validates :name, presence: true,
