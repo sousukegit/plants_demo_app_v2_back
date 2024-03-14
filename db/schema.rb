@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_13_204712) do
+ActiveRecord::Schema[7.0].define(version: 2024_03_14_035758) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,9 +25,9 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_13_204712) do
     t.integer "place_id", null: false
     t.string "google_place_id", null: false
     t.string "comment", null: false
-    t.boolean "price_point", null: false
-    t.boolean "mania_point", null: false
-    t.boolean "health_point", null: false
+    t.integer "price_point", null: false
+    t.integer "mania_point", null: false
+    t.integer "health_point", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
