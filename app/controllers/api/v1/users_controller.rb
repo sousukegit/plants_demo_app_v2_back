@@ -6,7 +6,6 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def create
-        puts(params)
         @user = User.new(user_params)
         #メール認証の設計にしていたが、activatedをいれてスキップする
         #セキュリティ上げる際に実装でもいいが、まずはユーザー体験を優先してみる
