@@ -1,8 +1,8 @@
 class Api::V1::ReviewsController < ApplicationController
 
     def index
-        review = Review.includes(:place)
-        render :json review.as_json(include: :place)
+        reviews = Review.includes(:place)
+        render json: reviews.as_json(include: :place)
     end
 
     def create

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
       resources :projects, only:[:index] 
 
       #place
-      resources :places, only:[:index]
+      resources :places, only:[:index,:show]
 
       #reviews
       resources :reviews, only:[:index,:create]
