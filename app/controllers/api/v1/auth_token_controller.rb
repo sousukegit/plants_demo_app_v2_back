@@ -35,6 +35,9 @@ class Api::V1::AuthTokenController < ApplicationController
       head(:ok) : response_500("Could not delete session")
   end
 
+  #新規作成時のトークン作成
+  #この時点でアクセストークンとリフレッシュトークンを与える
+
   private
 
    # params[:email]からアクティブなユーザーを返す
