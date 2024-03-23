@@ -6,7 +6,6 @@ class Api::V1::PlacesController < ApplicationController
     end
 
     def show
-        puts(params)
         place = Place.includes(:reviews).find(params[:id])
         render json: place.as_json(include: :reviews) 
     end

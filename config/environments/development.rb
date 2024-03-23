@@ -12,6 +12,10 @@ Rails.application.configure do
   config.reload_classes_only_on_change = true
   config.file_watcher = ActiveSupport::FileUpdateChecker
 
+  #追加　画像のURLを指定する
+  Rails.application.routes.default_url_options[:host] = 'localhost'
+  Rails.application.routes.default_url_options[:port] = 3000
+
   # Do not eager load code on boot.
   config.eager_load = false
 
