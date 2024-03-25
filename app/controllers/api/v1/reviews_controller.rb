@@ -23,7 +23,7 @@ class Api::V1::ReviewsController < ApplicationController
     # パラメータの許可設定
     def review_params
         params.permit(
-            :place_id, 
+            :place_id,
             :google_place_id,
             :rating,
             :comment,
@@ -31,7 +31,7 @@ class Api::V1::ReviewsController < ApplicationController
             :mania_point,
             :health_point,
             :user_id,
-            :image
+            images: []
             )
     end
 

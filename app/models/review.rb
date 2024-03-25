@@ -6,7 +6,7 @@ class Review < ApplicationRecord
     #1つの場所に複数のレビュー
     belongs_to :place
     #Active Storageで複数の画像を添付する
-    has_one_attached :image
+    has_many_attached :images
 
     def image_url
         # 紐づいている画像のURLを取得する
