@@ -10,7 +10,7 @@ class Review < ApplicationRecord
 
     def image_url
         # 紐づいている画像のURLを取得する
-        image.attached? ? url_for(image) : nil
+        images.attached? ? url_for(images) : nil
     end
 
 end
