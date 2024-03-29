@@ -1,8 +1,8 @@
 class Api::V1::ReviewsController < ApplicationController
 
     def index
-        reviews = Review.includes(:place)
-        render json: reviews.as_json(include: :place), methods: [:image_url]
+        reviews = Review.includes(:place).includes(:user)
+        render json: reviews.as_json(include:  { place: {}, user: {} }), methods: [:image_url]
     end
 
     def show

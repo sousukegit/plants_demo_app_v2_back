@@ -1,7 +1,7 @@
 class Review < ApplicationRecord
     include Rails.application.routes.url_helpers
 
-    #1ユーザーに複数のレビュー
+    #1ユーザー
     belongs_to :user
     #1つの場所に複数のレビュー
     belongs_to :place
