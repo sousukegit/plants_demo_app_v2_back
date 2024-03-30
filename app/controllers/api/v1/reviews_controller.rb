@@ -6,8 +6,8 @@ class Api::V1::ReviewsController < ApplicationController
     end
 
     def show
-        review = Review.includes(:place).find(params[:id])
-        render json: review.as_json(include: :place ,methods: [:image_url])
+        review = Review.includes([:place,:user]).find(params[:id])
+        render json: review.as_json(include: { place: {}, user: {} },methods: [:image_url])
     end
 
     def create

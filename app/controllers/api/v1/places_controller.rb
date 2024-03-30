@@ -7,8 +7,8 @@ class Api::V1::PlacesController < ApplicationController
     end
 
     def show
-        place = Place.includes(:reviews).find(params[:id])
-        render json: place.as_json(include: :reviews) 
+        place = Place.includes(reviews:[:user]).find(params[:id])
+        render json: place.as_json(include: [reviews: { include: :user}]) 
     end
 
      # パラメータの許可設定
