@@ -12,7 +12,7 @@ class Api::V1::ReviewsController < ApplicationController
 
     def create
         @review = Review.new(review_params)
-        @review.images.attach(params[:images])
+        # @review.images.attach(params[:images])
         if @review.save
             render json: { message: 'created successfully' }, status: :created
         else
@@ -32,7 +32,7 @@ class Api::V1::ReviewsController < ApplicationController
             :mania_point,
             :health_point,
             :user_id,
-            # images:[]
+            images:[]
             )
     end
 
