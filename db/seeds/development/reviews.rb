@@ -22,6 +22,7 @@ count=0
     price_point = rand(1..5)
     mania_point = rand(1..5)
     health_point = rand(1..5)
+    rating = rand(1..5)
     user_id = n+1
     puts(user_id)
     #Idが存在しなけれなnew
@@ -35,6 +36,7 @@ count=0
       review.price_point = price_point
       review.mania_point = mania_point
       review.health_point = health_point
+      review.rating = rating
       review.user_id = user_id
       review.save!
     end

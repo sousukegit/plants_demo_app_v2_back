@@ -19,7 +19,7 @@ Rails.application.routes.draw do
       resources :places, only:[:index,:show]
 
       #reviews
-      resources :reviews, only:[:index,:create]
+      resources :reviews, only:[:index,:create,:show]
 
     end
   end
