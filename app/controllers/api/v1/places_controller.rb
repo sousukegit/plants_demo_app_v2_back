@@ -1,8 +1,9 @@
 class Api::V1::PlacesController < ApplicationController
 
     def index
-        place = Place.includes(:reviews)
-        render json: place.as_json(include: :reviews) 
+        place = Place.includes(reviews:[:user])
+         #render json: place.as_json(include: :reviews)
+        render json: place.as_json(include: [reviews: { include: :user}])
     end
 
     def show

@@ -1,7 +1,7 @@
 class Api::V1::ReviewsController < ApplicationController
 
     def index
-        reviews = Review.includes(:place).includes(:user)
+        reviews = Review.includes([:place,:user])
         render json: reviews.as_json(include:  { place: {}, user: {} }), methods: [:image_url]
     end
 
@@ -11,9 +11,9 @@ class Api::V1::ReviewsController < ApplicationController
     end
 
     def create
-        @review = Review.new(review_params)
+        review = Review.new(review_params)
         # @review.images.attach(params[:images])
-        if @review.save
+        if review.save
             render json: { message: 'created successfully' }, status: :created
         else
             msg = "create false review"
