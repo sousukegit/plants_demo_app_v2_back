@@ -22,7 +22,7 @@ class Api::V1::ReviewsController < ApplicationController
     end
 
     def update
-        review = Review.find_by(params[:id])
+        review = Review.find_by(id: params[:id])
         if review.update!(review_params)
             render json: {message: 'update successfully'}
         else
@@ -34,6 +34,7 @@ class Api::V1::ReviewsController < ApplicationController
     # パラメータの許可設定
     def review_params
         params.permit(
+            :id,
             :place_id,
             :google_place_id,
             :rating,
