@@ -21,9 +21,31 @@ class Api::V1::ReviewsController < ApplicationController
         end
     end
 
+    def update
+        review = Review.find_by(id: params[:id])
+        if review.update!(review_params)
+            render json: {message: 'update successfully'}
+        else
+            msg = "update false review"
+            render status: 401, json: { status: 401, error: msg }
+        end
+    end
+
+    def destroy
+        review = Review.find_by(id: params[:id])
+        if review.destroy
+            render json: {message: 'delete successfully'}
+        else
+            msg = "delete false review"
+            render status: 401, json: { status: 401, error: msg }
+        end
+      
+    end
+
     # パラメータの許可設定
     def review_params
         params.permit(
+            :id,
             :place_id,
             :google_place_id,
             :rating,
