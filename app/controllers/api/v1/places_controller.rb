@@ -8,7 +8,7 @@ class Api::V1::PlacesController < ApplicationController
 
     def show
         place = Place.includes(reviews:[:user]).find(params[:id])
-        render json: place.as_json(include: [reviews: { include: :user}]) 
+        render json: place.as_json(include: [reviews: { include: :user ,methods: [:image_url]}])
     end
 
      # パラメータの許可設定
@@ -16,5 +16,5 @@ class Api::V1::PlacesController < ApplicationController
         puts(params)
         params.require(:places).permit(:id)
     end
-    
+
 end
