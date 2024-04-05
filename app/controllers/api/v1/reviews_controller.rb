@@ -23,6 +23,18 @@ class Api::V1::ReviewsController < ApplicationController
 
     def update
         review = Review.find_by(id: params[:id])
+        mix_images = params[:images]
+        puts("before mix_images")
+        puts(mix_images)
+        if(mix_images.present?)
+            mix_images.map!{|mix_image| mix_image.is_a?(String) ? changeBlob(mix_image) : mix_image}
+        end
+        puts("after mix_images")
+        puts(mix_images)
+        #既存のアタッチされたblobは削除する
+        review.images.purge
+        #整理された画像をattachする
+        review.images.attach(mix_images)
         if review.update!(review_params)
             render json: {message: 'update successfully'}
         else
@@ -31,8 +43,9 @@ class Api::V1::ReviewsController < ApplicationController
         end
     end
 
+
     def destroy
-        review = Review.find_by(id: params[:id])
+        review = Review.find_by(id: params[:id])        
         if review.destroy
             render json: {message: 'delete successfully'}
         else
@@ -41,6 +54,8 @@ class Api::V1::ReviewsController < ApplicationController
         end
       
     end
+
+    private
 
     # パラメータの許可設定
     def review_params
@@ -54,8 +69,13 @@ class Api::V1::ReviewsController < ApplicationController
             :mania_point,
             :health_point,
             :user_id,
-            images:[]
+            # images:[]
             )
+    end
+
+    def changeBlob(mix_image)
+        key = mix_image.split("/")[-2]
+        blob = ActiveStorage::Blob.find_signed(key)
     end
 
 end
