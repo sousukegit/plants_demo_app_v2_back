@@ -12,7 +12,7 @@ class Api::V1::ReviewsController < ApplicationController
 
     def create
         review = Review.new(review_params)
-        # @review.images.attach(params[:images])
+        review.images.attach(params[:images])
         if review.save
             render json: { message: 'created successfully' }, status: :created
         else
@@ -32,7 +32,7 @@ class Api::V1::ReviewsController < ApplicationController
         puts("after mix_images")
         puts(mix_images)
         #既存のアタッチされたblobは削除する
-        review.images.purge
+        #review.images.purge
         #整理された画像をattachする
         review.images.attach(mix_images)
         if review.update!(review_params)
