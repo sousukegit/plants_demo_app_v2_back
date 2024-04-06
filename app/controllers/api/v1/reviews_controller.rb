@@ -24,23 +24,25 @@ class Api::V1::ReviewsController < ApplicationController
     def update
         review = Review.find_by(id: params[:id])
         mix_images = params[:images]
-        puts("before mix_images")
-        puts(mix_images)
         if(mix_images.present?)
             mix_images.map!{|mix_image| mix_image.is_a?(String) ? changeBlob(mix_image) : mix_image}
         end
-        puts("after mix_images")
-        puts(mix_images)
-        #既存のアタッチされたblobは削除する
-        #review.images.purge
-        #整理された画像をattachする
-        review.images.attach(mix_images)
-        if review.update!(review_params)
-            render json: {message: 'update successfully'}
-        else
-            msg = "update false review"
-            render status: 401, json: { status: 401, error: msg }
+        review.images = mix_images
+        ActiveRecord::Base.transaction do
+            
+            #整理された画像をattachする
+            #review.images.attach(mix_images)
+            #既存のアタッチされたblobは削除する
+            #review.images.purge
+            
+            if review.update!(review_params)
+                render json: {message: 'update successfully'}
+            else
+                msg = "update false review"
+                render status: 401, json: { status: 401, error: msg }
+            end
         end
+        
     end
 
 
@@ -69,7 +71,7 @@ class Api::V1::ReviewsController < ApplicationController
             :mania_point,
             :health_point,
             :user_id,
-            # images:[]
+            images:[]
             )
     end
 
