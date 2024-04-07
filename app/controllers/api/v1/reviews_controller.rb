@@ -7,9 +7,25 @@ class Api::V1::ReviewsController < ApplicationController
     end
 
     #レビュー平均値
-    # def average
+    def average
+        reviews = Review.includes(:place)
+        av_reviews = reviews.group(:place_id).select(
+            "place_id,
+            ROUND(AVG(rating)::numeric,2) as rating,
+            ROUND(AVG(mania_point)::numeric,2) as mania_point,
+            ROUND(AVG(price_point)::numeric,2) as price_point,
+            ROUND(AVG(health_point)::numeric,2) as health_point"
+            )
+        #整数型なら小数点第一位を付ける
+        av_reviews.each do |review|
+          review.rating = review.rating.to_s + (review.rating.to_i == review.rating.to_f ? ".0" : "" )
+          review.mania_point = review.mania_point.to_s + (review.mania_point.to_i == review.mania_point ? ".0" : "" )
+          review.health_point = review.health_point.to_s + (review.health_point.to_i == review.health_point ? ".0" : "" )
+          review.price_point = review.price_point.to_s + (review.price_point.to_i == review.price_point ? ".0" : "" )
+        end
 
-    # end
+        render json: av_reviews.as_json(include: :place)
+    end
 
     #詳細
     def show

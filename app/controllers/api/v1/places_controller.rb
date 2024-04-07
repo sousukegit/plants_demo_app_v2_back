@@ -1,9 +1,23 @@
 class Api::V1::PlacesController < ApplicationController
 
     def index
-        place = Place.includes(reviews:[:user])
+        places = Place.includes(reviews:[:user])
+        reviews = Review.includes(:place)
+        avg_reviews = reviews.group(:place_id).select(
+            "place_id,
+            ROUND(AVG(rating)::numeric,2) as rating,
+            ROUND(AVG(mania_point)::numeric,2) as mania_point,
+            ROUND(AVG(price_point)::numeric,2) as price_point,
+            ROUND(AVG(health_point)::numeric,2) as health_point"
+            )
+        places.each do |place|
+            # avg_reviews.each do |avg|
+            #     place[:avg_reviews] = avg.place_id == place.id ? avg : null
+            # end
+            place[:avg_reviews] = avg_reviews.find { |avg| avg.place_id == place.id }
+        end
          #render json: place.as_json(include: :reviews)
-        render json: place.as_json(include: [reviews: { include: :user}])
+        render json: places.as_json(include: [reviews: { include: :user}])
     end
 
     def show
