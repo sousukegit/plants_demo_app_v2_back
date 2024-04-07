@@ -1,15 +1,23 @@
 class Api::V1::ReviewsController < ApplicationController
 
+    #店舗のレビュー一覧
     def index
         reviews = Review.includes([:place,:user])
         render json: reviews.as_json(include:  { place: {}, user: {} }), methods: [:image_url]
     end
 
+    #レビュー平均値
+    # def average
+
+    # end
+
+    #詳細
     def show
         review = Review.includes([:place,:user]).find(params[:id])
         render json: review.as_json(include: { place: {}, user: {} },methods: [:image_url])
     end
 
+    #レビュー投稿
     def create
         review = Review.new(review_params)
         #review.images.attach(params[:images])
@@ -21,6 +29,7 @@ class Api::V1::ReviewsController < ApplicationController
         end
     end
 
+    #レビュー更新
     def update
         review = Review.find_by(id: params[:id])
         mix_images = params[:images]
@@ -29,7 +38,6 @@ class Api::V1::ReviewsController < ApplicationController
         end
         review.images = mix_images
         ActiveRecord::Base.transaction do
-
             if review.update!(review_params)
                 render json: {message: 'update successfully'}
             else
