@@ -19,8 +19,9 @@ Rails.application.routes.draw do
       resources :places, only:[:index,:show]
 
       #reviews
-      resources :reviews, only:[:index,:create,:show,:update,:destroy]
-
+      resources :reviews, only:[:index,:create,:show,:update,:destroy] do
+        get :average, on: :collection
+      end
     end
   end
 end

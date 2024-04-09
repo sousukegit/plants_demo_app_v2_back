@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_03_28_224628) do
+ActiveRecord::Schema[7.0].define(version: 2024_04_09_115906) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,17 +47,19 @@ ActiveRecord::Schema[7.0].define(version: 2024_03_28_224628) do
     t.string "google_place_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "longitude"
+    t.float "latitude"
   end
 
   create_table "reviews", force: :cascade do |t|
     t.string "google_place_id", null: false
     t.string "comment", null: false
-    t.integer "price_point", null: false
-    t.integer "mania_point", null: false
-    t.integer "health_point", null: false
+    t.float "price_point", null: false
+    t.float "mania_point", null: false
+    t.float "health_point", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "rating"
+    t.float "rating"
     t.bigint "place_id"
     t.bigint "user_id"
     t.index ["place_id"], name: "index_reviews_on_place_id"
