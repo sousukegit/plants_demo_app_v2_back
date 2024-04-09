@@ -47,12 +47,13 @@ count=0
         place.longitude = longitude
         place.latitude = latitude
         place.save!
-    else
-      place.name = name
-      place.google_place_id = google_place_id
-      place.longitude = longitude
-      place.latitude = latitude
-      place.save!
+    else      
+      place.update!(
+        name:  name,
+        google_place_id: google_place_id,
+        longitude: longitude,
+        latitude: latitude
+      )
     end
   end
   
