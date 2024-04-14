@@ -1,49 +1,44 @@
+FROM ruby:3.1.4 AS base
 
-#https://github.com/docker-library/ruby/blob/61a806938da52038916a8fd7b9b4373937bdc28f/3.1/alpine3.19/Dockerfile
-FROM ruby:3.1.4-alpine
+#タイムゾーン設定
+ENV TZ=Asia/Tokyo
+#作業ディレクトリ
+WORKDIR /app
 
-#DockerFile内で使用する変数
-#appが入るARG WORKDIR
-ARG WORKDIR
-ARG RUNTIME_PACKAGES="nodejs tzdata postgresql-dev postgresql git" 
-ARG DEV_PACKAGES="build-base curl-dev"    
+ENV NODE_MAJOR_VERSION = 20
 
-#環境変数を定義（コンテナから参照可）
-ENV HOME=/${WORKDIR} \
-    TZ=Asia/Tokyo
+RUN gem update --system && gem install bundler:2.3.26
 
-#ベースイメージに対してコマンドを実行する
-# ENV test（このRUN命令は確認のためなので無くても良い）
-RUN echo ${HOME}
+FROM base AS builder
 
-#作業ディレクトリを定義　
-#コンテナ/app/rails
-WORKDIR ${HOME}
+ARG DEV_PACKAGES="build-essential curl default-mysql-client less libpq-dev locales nginx sudo vim yarn nodejs cron"
 
-#ホスト先のファイルをコンテナにコピー
-#Copy　コピー元（ホスト）コピー先（コンテナ）
-#コピー元（ホスト）　DockerFileがありディレクトリ以下を指定　
-#コピー先（コンテナ）　今いるカレントディレクトリ（./）WORKDIRで指定したディレクトリのこと
-COPY Gemfile* ./
+RUN set -x && curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
+    echo 'deb http://dl.yarnpkg.com/debian/ stable main' > /etc/apt/sources.list.d/yarn.list
 
-    #apk alpine linuxのcommand
-    #apk update パッケージの最新リストを取得
-RUN apk update && \
-    #インストールされているパッケージを最新のものにする
-    apk upgrade && \
-    #パッケージのインストールを実行
-    #nocacheでキャッシュしない
-    apk add --no-cache ${RUNTIME_PACKAGES} && \
-    #--virtual　名前　でパッケージをひとまとめにする（仮想パッケージ）
-    #DEV_PACKAGESは環境変数で指定したパッケージ
-    apk add --virtual build-dependencies --no-cache ${DEV_PACKAGES} && \
-    #Gemのインストール　j4はGemの高速化
-    bundle install -j4 && \
-    #パッケージを削除（bundleインストールが終わったら不要になる）
-    apk del build-dependencies
+RUN ln -sf  /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
+    apt-get update && apt-get upgrade -qq && \
+    curl -fsSL https://deb.nodesource.com/setup_$NODE_MAJOR_VERSION.x | bash - && \
+    apt-get install -y --no-install-recommends \
+    ${DEV_PACKAGES}
 
-    # api直下のディレクトリを指定してコンテナのカレントディレクトリにコピー
-COPY . ./
-    #ホストPCのブラウザからコンテナのrailsにアクセスできるようにする
-    #-b バインド。外部から参照できるようにする
-CMD ["rails", "server", "-b", "0.0.0.0"]
+FROM builder AS bundle
+
+COPY Gemfile Gemfile.lock ./
+RUN bundle install
+
+FROM builder AS main
+
+COPY --from=bundle /usr/local/bundle /usr/local/bundle
+COPY . .
+
+#エントリーポイントの実行権限付与
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+
+#初回のみ実行
+# RUN mkdir -p tmp/sockets
+# RUN mkdir -p tmp/pids
+
+VOLUME /app/public
+VOLUME /app/tmp
