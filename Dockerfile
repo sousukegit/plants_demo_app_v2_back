@@ -37,8 +37,8 @@ COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 
 #初回のみ実行
-# RUN mkdir -p tmp/sockets
-# RUN mkdir -p tmp/pids
+RUN mkdir -p tmp/sockets
+RUN mkdir -p tmp/pids
 
 VOLUME /app/public
 VOLUME /app/tmp

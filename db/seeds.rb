@@ -1,5 +1,5 @@
 table_names = %w(
-  places
+  users
 )
 
 table_names.each do |table_name|
