@@ -19,8 +19,11 @@ port ENV.fetch("PORT") { 3000 }
 
 # Specifies the `environment` that Puma will run in.
 #
-environment ENV.fetch("RAILS_ENV") { "development" }
-
+#environment ENV.fetch("RAILS_ENV") { "development" }
+#追加　pumaで起動したとき標準出力させる
+unless ENV.fetch("RAILS_ENV", "development") == "development"
+    stdout_redirect "#{app_root}/log/puma.stdout.log", "#{app_root}/log/puma.stderr.log", true
+end
 # Specifies the `pidfile` that Puma will use.
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 

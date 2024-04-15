@@ -48,6 +48,9 @@ gem 'hirb-unicode-steakknife', '~> 0.0.9'
 #追加　jwt：https://rubygems.org/gems/jwt
 gem 'jwt', '~> 2.8'
 
+#追加　デプロイ環境を合わせるためMYSQLに変更のためインストール
+gem 'mysql2', '>= 0.4.4'
+
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

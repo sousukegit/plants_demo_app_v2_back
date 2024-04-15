@@ -5,10 +5,10 @@ class Api::V1::PlacesController < ApplicationController
         reviews = Review.includes(:place)
         avg_reviews = reviews.group(:place_id).select(
             "place_id,
-            ROUND(AVG(rating)::numeric,1) as rating,
-            ROUND(AVG(mania_point)::numeric,1) as mania_point,
-            ROUND(AVG(price_point)::numeric,1) as price_point,
-            ROUND(AVG(health_point)::numeric,1) as health_point"
+            ROUND(AVG(rating),1) as rating,
+            ROUND(AVG(mania_point),1) as mania_point,
+            ROUND(AVG(price_point),1) as price_point,
+            ROUND(AVG(health_point),1) as health_point"
             )
         places.each do |place|
             place[:avg_reviews] = avg_reviews.find { |avg| avg.place_id == place.id }
@@ -18,6 +18,16 @@ class Api::V1::PlacesController < ApplicationController
 
     def show
         place = Place.includes(reviews:[:user]).find(params[:id])
+        reviews = Review.includes(:place)
+        avg_reviews = reviews.group(:place_id).select(
+            "place_id,
+            ROUND(AVG(rating),1) as rating,
+            ROUND(AVG(mania_point),1) as mania_point,
+            ROUND(AVG(price_point),1) as price_point,
+            ROUND(AVG(health_point),1) as health_point"
+            )
+        place[:avg_reviews] = avg_reviews.find { |avg| avg.place_id == place.id }
+
         render json: place.as_json(include: [reviews: { include: :user ,methods: [:image_url]}])
     end
 

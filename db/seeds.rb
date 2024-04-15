@@ -1,5 +1,5 @@
 table_names = %w(
-  places
+  reviews
 )
 
 table_names.each do |table_name|

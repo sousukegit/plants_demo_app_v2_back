@@ -57,7 +57,6 @@ class Api::V1::AuthTokenController < ApplicationController
 
    # refresh_tokenをcookieにセットする
    def set_refresh_token_to_cookie
-    puts("set_refresh_token_to_cookie")
      cookies[session_key] = {
        value: refresh_token,
        expires: refresh_token_expiration,
