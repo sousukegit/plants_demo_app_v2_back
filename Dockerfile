@@ -1,10 +1,16 @@
+#マルチビルドを使用
+#ビルド手順を分けて必要な生成物のみをを使用
 FROM ruby:3.1.4 AS base
+
+#本番のみ使用ーーーーーー
+#本番に設定
+ENV RAILS_ENV = production
 
 #タイムゾーン設定
 ENV TZ=Asia/Tokyo
 #作業ディレクトリ
 WORKDIR /app
-
+#node安定版
 ENV NODE_MAJOR_VERSION = 20
 
 RUN gem update --system && gem install bundler:2.3.26
@@ -36,9 +42,11 @@ COPY . .
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 
-#初回のみ実行
+#本番のみ使用ーーーーーー
+#コンテナ間のUNIXソケット通信を可能にするため、ディレクトリを作成する
 RUN mkdir -p tmp/sockets
 RUN mkdir -p tmp/pids
 
+#nginxコンテナからRaiilsのSockファイルが見えるようにしす
 VOLUME /app/public
 VOLUME /app/tmp
