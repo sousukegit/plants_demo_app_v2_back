@@ -1,4 +1,6 @@
 table_names = %w(
+  users
+  places
   reviews
 )
 
