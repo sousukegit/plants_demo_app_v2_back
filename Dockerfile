@@ -4,7 +4,7 @@ FROM ruby:3.1.4 AS base
 
 #本番のみ使用ーーーーーー
 #本番に設定
-ENV RAILS_ENV = production
+ENV RAILS_ENV production
 
 #タイムゾーン設定
 ENV TZ=Asia/Tokyo
