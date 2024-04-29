@@ -13,12 +13,22 @@ threads min_threads_count, max_threads_count
 #
 worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
 
-# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-#
-port ENV.fetch("PORT") { 3000 }
 
 # Specifies the `environment` that Puma will run in.
-#
+# Specifies the `port` that Puma will listen on to receive requests; default is 3000.
+
+#追加　本番環境でSokcetを待ち受け状態にする
+#https://infltech.com/articles/QkaUwN
+if ENV["RAILS_ENV"] == "production" then
+    #ルートディレクトリを取得
+    app_root = File.expand_path('..', __dir__)
+    #待ち受けディレクトリを指定（nginXコンテナ共通ボリューム上）
+    bind "unix://#{app_root}/tmp/sockets/puma.sock"
+else
+    port ENV.fetch("PORT") { 3000 }
+end
+# stdout_redirect "/var/log/puma.stdout.log", "/var/log/puma.stderr.log", true	
+
 #environment ENV.fetch("RAILS_ENV") { "development" }
 #追加　pumaで起動したとき標準出力させる
 unless ENV.fetch("RAILS_ENV", "development") == "development"
