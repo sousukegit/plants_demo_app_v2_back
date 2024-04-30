@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-   # 追加
+  # 追加
   namespace :api do
     namespace :v1 do
-
+      #alb health check
+      resources :health_check, only:[:index]
       #users_controller
       resources :users, only:[:index,:create]
 
