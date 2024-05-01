@@ -10,6 +10,7 @@ class ApplicationController < ActionController::API
     private
     # XMLHttpRequestでない場合は403エラーを返す
     def xhr_request?
+    #health_checkのパスはCSRF対策を無効化
     return if request.path == "/api/v1/health_check"
     # リクエストヘッダ X-Requested-With: 'XMLHttpRequest' の存在を判定
     return if request.xhr?
