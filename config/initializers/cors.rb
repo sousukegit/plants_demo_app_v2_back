@@ -7,6 +7,7 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
+    # ECSにフロントの環境変数を記載
     origins ENV["API_DOMAIN"] || ""
 
     resource "*",

@@ -31,7 +31,13 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = "X-Accel-Redirect" # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
-  config.active_storage.service = :local
+  # config.active_storage.service = :local
+  #追加　Activestrage用のS3使用
+  config.active_storage.service = :amazon
+
+  #追加　Activestorage用にURLを指定する
+  Rails.application.routes.default_url_options[:host] = 'api.botanispot.com'
+
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
@@ -83,4 +89,11 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Send deprecation notices to registered listeners.	# Don't log any deprecations.
+  config.active_support.deprecation = :notify	
+  # Log disallowed deprecations.	
+  config.active_support.disallowed_deprecation = :log	
+  # Tell Active Support which deprecation messages to disallow.	
+  config.active_support.disallowed_deprecation_warnings = []
 end
