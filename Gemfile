@@ -67,3 +67,8 @@ group :test do
   gem 'minitest-reporters'
 end
 
+# 追加
+group :production do
+#https://github.com/aws/aws-sdk-ruby#configuration 
+  gem 'aws-sdk-s3', '~> 1.149'
+end
