@@ -83,4 +83,11 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Send deprecation notices to registered listeners.	# Don't log any deprecations.
+  config.active_support.deprecation = :notify	
+  # Log disallowed deprecations.	
+  config.active_support.disallowed_deprecation = :log	
+  # Tell Active Support which deprecation messages to disallow.	
+  config.active_support.disallowed_deprecation_warnings = []
 end

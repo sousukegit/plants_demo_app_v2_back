@@ -26,14 +26,15 @@ if ENV["RAILS_ENV"] == "production" then
     bind "unix://#{app_root}/tmp/sockets/puma.sock"
 else
     port ENV.fetch("PORT") { 3000 }
+    environment ENV.fetch("RAILS_ENV") { "development" }
 end
 # stdout_redirect "/var/log/puma.stdout.log", "/var/log/puma.stderr.log", true	
 
 #environment ENV.fetch("RAILS_ENV") { "development" }
 #追加　pumaで起動したとき標準出力させる
-unless ENV.fetch("RAILS_ENV", "development") == "development"
-    stdout_redirect "#{app_root}/log/puma.stdout.log", "#{app_root}/log/puma.stderr.log", true
-end
+# unless ENV.fetch("RAILS_ENV", "development") == "development"
+#     stdout_redirect "#{app_root}/log/puma.stdout.log", "#{app_root}/log/puma.stderr.log", true
+# end
 # Specifies the `pidfile` that Puma will use.
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 
