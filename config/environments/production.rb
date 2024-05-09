@@ -36,6 +36,7 @@ Rails.application.configure do
   config.active_storage.service = :amazon
 
   #追加　Activestorage用にURLを指定する
+  Rails.application.routes.default_url_options[:protocol] = 'https'
   Rails.application.routes.default_url_options[:host] = 'api.botanispot.com'
 
 
