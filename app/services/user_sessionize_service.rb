@@ -4,6 +4,7 @@ module UserSessionizeService
 
     # セッションユーザーが居ればtrue、存在しない場合は401を返す
     def sessionize_user
+logger.debug "sessionize_user:リロードされてクッキーからユーザーのセッション情報を確認"
       session_user.present? || unauthorized_user
     end
   
@@ -15,7 +16,6 @@ module UserSessionizeService
     # セッションcookieを削除する
     def delete_session
       cookies.delete(session_key,secure: true)
-puts("delete")
     end
   
     private
@@ -29,6 +29,7 @@ puts("delete")
       # refresh_tokenから有効なユーザーを取得する
       def fetch_user_from_refresh_token
         User.from_refresh_token(token_from_cookies)
+logger.debug "fetch_user_from_refresh_token:refresh_tokenから有効なユーザーを取得"
       rescue JWT::InvalidJtiError
         # jtiエラーの場合はcontrollerに処理を委任
         catch_invalid_jti
@@ -39,7 +40,9 @@ puts("delete")
   
       # refresh_tokenのユーザーを返す
       def session_user
+logger.debug "session_user:refresh_tokenのクッキーがあるかどうか検証開始"
         return nil unless token_from_cookies
+logger.debug "session_user:クッキーあったので今からユーザーを検証"
         @_session_user ||= fetch_user_from_refresh_token
       end
   
