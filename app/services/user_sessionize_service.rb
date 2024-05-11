@@ -28,8 +28,8 @@ logger.debug "sessionize_user:リロードされてクッキーからユーザ�
   
       # refresh_tokenから有効なユーザーを取得する
       def fetch_user_from_refresh_token
+        logger.debug "fetch_user_from_refresh_token:refresh_tokenから有効なユーザーを取得"
         User.from_refresh_token(token_from_cookies)
-logger.debug "fetch_user_from_refresh_token:refresh_tokenから有効なユーザーを取得"
       rescue JWT::InvalidJtiError
         # jtiエラーの場合はcontrollerに処理を委任
         catch_invalid_jti
@@ -40,9 +40,8 @@ logger.debug "fetch_user_from_refresh_token:refresh_tokenから有効なユー�
   
       # refresh_tokenのユーザーを返す
       def session_user
-logger.debug "session_user:refresh_tokenのクッキーがあるかどうか検証開始"
+logger.debug "session_user:refresh_tokenのユーザーを返す"
         return nil unless token_from_cookies
-logger.debug "session_user:クッキーあったので今からユーザーを検証"
         @_session_user ||= fetch_user_from_refresh_token
       end
   
