@@ -9,6 +9,11 @@ ja:
         password: パスワード
         activated: アクティブフラグ
         admin: 管理者フラグ
+      place:
+        name: 場所
+        google_place_id: google_place_id
+        latitude: 緯度
+        longitude: 経度
     errors:
       messages:
         record_invalid: 'バリデーションに失敗しました: %{errors}'
