@@ -46,9 +46,16 @@ module App
 
     # $LOAD_PATHにautoload pathを追加しない(Zeitwerk有効時false推奨)
     # config.add_autoload_paths_to_load_path = false
-
     config.api_only = true
-
-   
+    
+    #追加
+    #Rspec
+    config.generators do |g|
+      g.test_framework :rspec,
+      fixtures: false,
+      view_specs: false,
+      helper_specs: false,
+      routing_specs: false
+    end
   end
 end

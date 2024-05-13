@@ -3,11 +3,10 @@ require "test_helper"
 class UserTest < ActiveSupport::TestCase
 
   def setup
-    @user = active_user    
+    @user = active_user
   end
 
   test "name_validation" do
-
     #入力必須
     user = User.new(email: "test@example.com", password: "password")
     user.save
