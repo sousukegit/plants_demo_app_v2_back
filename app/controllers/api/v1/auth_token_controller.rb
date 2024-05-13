@@ -23,8 +23,10 @@ class Api::V1::AuthTokenController < ApplicationController
 
   # リフレッシュ
   def refresh
+logger.debug "Refresh:セッションユーザーが見つかったのでリフレッシュトークンを生成処理発火"
     @user = session_user
     set_refresh_token_to_cookie
+    logger.debug "set_refresh_token_to_cookie:リフレッシュトークンをクッキーにセット完了"
     render json: login_response
   end
 
