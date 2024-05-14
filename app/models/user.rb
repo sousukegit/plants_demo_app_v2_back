@@ -20,7 +20,8 @@ class User < ApplicationRecord
                     length:{maximum:30, allow_blank:true}
     
     validates :email, presence: true,
-                      email:{allow_blank: true}
+                    email_validator: true,
+                    email:{allow_blank: true}
 
     # 追加
     #allow_nilでもhas_secure_passwordが必須入力確認してくれるのでnil

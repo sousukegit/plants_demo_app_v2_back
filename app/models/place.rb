@@ -3,12 +3,14 @@ class Place < ApplicationRecord
     has_many :reviews 
     #平均値を入れるために追加
     attribute :avg_reviews
+    validate :check_unique_google_place_id 
 
     validates :name, presence: true,
                     length:{maximum:100, allow_blank:true}
 
     validates :google_place_id, presence: true,
-                    length:{maximum:100, allow_blank:true}
+                    length:{maximum:100, allow_blank:true}              
+
 
     validates :latitude, presence: true,
                     numericality: {
@@ -23,5 +25,17 @@ class Place < ApplicationRecord
                         less_than_or_equal_to:180,
                     },
                     length:{maximum:100, allow_blank:true}
+
+    
+    def check_unique_google_place_id
+        #return false unless new_record?
+        
+        if Place.find_by(google_place_id: google_place_id).present?
+            puts google_place_id
+            errors.add(:google_place_id,"すでに同じが登録されています")
+        else
+            puts "not_found"
+        end
+    end
 
 end

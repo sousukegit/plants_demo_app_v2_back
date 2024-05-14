@@ -4,8 +4,8 @@ RSpec.describe Place, type: :model do
   #各テスト時に初期データセット
   before do
     @place = Place.new(
-      name: "ファンガーデンMASAKI",
-      google_place_id: "ChIJ0_TWrRHuTzURSfDvHGXBjoM",
+      name: "そうすけテストガーデニング",
+      google_place_id: "ChIJ0_aaaaaaaaaaaaaaaaa",
       latitude: "33.7855738955378",
       longitude: "132.71488267475482"
     )
@@ -64,7 +64,11 @@ RSpec.describe Place, type: :model do
     expect(@place.errors[:longitude]).to include("は180以下の値にしてください")
   end
   #同じgoogle_place_idが1つ以上存在しない状態であること
-
+  it "is invalid for unique of google_place_id " do
+    @place.google_place_id = "ChIJ0_TWrRHuTzURSfDvHGXBjoM"
+    @place.valid?
+    expect(@place.errors[:google_place_id]).to include("すでに同じが登録されています")
+  end
   #同じ緯度と経度を持つ場所が1つ以上存在しない状態であること
 
 
