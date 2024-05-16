@@ -28,13 +28,12 @@ class Place < ApplicationRecord
 
     
     def check_unique_google_place_id
-        #return false unless new_record?
-        
+        return false unless new_record?
+        place = Place.all.present?
+        puts place
         if Place.find_by(google_place_id: google_place_id).present?
             puts google_place_id
             errors.add(:google_place_id,"すでに同じが登録されています")
-        else
-            puts "not_found"
         end
     end
 

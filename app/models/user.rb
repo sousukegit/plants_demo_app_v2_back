@@ -19,8 +19,7 @@ class User < ApplicationRecord
     validates :name, presence: true,
                     length:{maximum:30, allow_blank:true}
     
-    validates :email, presence: true,
-                    email_validator: true,
+    validates :email, presence: true, email:true,
                     email:{allow_blank: true}
 
     # 追加
