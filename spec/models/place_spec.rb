@@ -6,8 +6,8 @@ RSpec.describe Place, type: :model do
     @place = Place.new(
       name: "そうすけテストガーデニング",
       google_place_id: "ChIJ0_aaaaaaaaaaaaaaaaa",
-      latitude: "33.7855738955378",
-      longitude: "132.71488267475482"
+      latitude: "33.123456789",
+      longitude: "132.123456789"
     )
   end
 
@@ -18,9 +18,7 @@ RSpec.describe Place, type: :model do
   #名前がなければ無効な状態であること
   it "is invalid without a name" do
     @place.name = nil
-  #  place.valid?
-  #  expect(place.errors[:name]).to include("を入力してください")
-   expect(@place).to be_invalid
+    expect(@place).to be_invalid
   end
   #placeidがなければ無効な状態であること
   it "is invalid without a google_place_id" do
@@ -70,7 +68,12 @@ RSpec.describe Place, type: :model do
     expect(@place.errors[:google_place_id]).to include("すでに同じが登録されています")
   end
   #同じ緯度と経度を持つ場所が1つ以上存在しない状態であること
-
+  # it "is invalid same latitude and longitude" do
+  #   @place.latitude = 33.7856
+  #   @place.longitude = 132.715
+  #   @place.valid?
+  #   expect(@place.errors[:longitude]).to include("すでに同じが登録されています")
+  # end
 
   #pending "add some examples to (or delete) #{__FILE__}"
 end

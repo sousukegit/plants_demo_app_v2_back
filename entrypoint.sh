@@ -8,8 +8,8 @@ rm -f /app/tmp/pids/server.pid
 #migrationファイルを整理して対応
 # WARNING:createとseedはfargateの初回のみ実行
 # bundle exec rails db:create
- bundle exec rails db:migrate
- bundle exec rails db:seed
+#  bundle exec rails db:migrate
+#  bundle exec rails db:seed
 
 #起動
 bundle exec pumactl start
