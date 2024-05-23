@@ -14,6 +14,6 @@
       user.save!
     end
   end
-  puts ActiveRecord::Base.connection_config
-  puts "users1 = #{User.find_by(id: 1)}"
+  #puts ActiveRecord::Base.connection_config
+  puts "user1 = #{User.find_by(name: "user1").id}"
   puts "users = #{User.count}"
