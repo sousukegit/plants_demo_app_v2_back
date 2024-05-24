@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_05_12_050130) do
+ActiveRecord::Schema[7.0].define(version: 2024_05_23_011555) do
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,6 +39,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_12_050130) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "place_plants", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "place_id", null: false
+    t.bigint "plant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["place_id"], name: "index_place_plants_on_place_id"
+    t.index ["plant_id"], name: "index_place_plants_on_plant_id"
+  end
+
   create_table "places", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "google_place_id", null: false
@@ -46,6 +55,22 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_12_050130) do
     t.datetime "updated_at", null: false
     t.float "longitude"
     t.float "latitude"
+  end
+
+  create_table "plants", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "discription"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "review_plants", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "review_id", null: false
+    t.bigint "plant_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["plant_id"], name: "index_review_plants_on_plant_id"
+    t.index ["review_id"], name: "index_review_plants_on_review_id"
   end
 
   create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -76,6 +101,10 @@ ActiveRecord::Schema[7.0].define(version: 2024_05_12_050130) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "place_plants", "places"
+  add_foreign_key "place_plants", "plants"
+  add_foreign_key "review_plants", "plants"
+  add_foreign_key "review_plants", "reviews"
   add_foreign_key "reviews", "places"
   add_foreign_key "reviews", "users"
 end
