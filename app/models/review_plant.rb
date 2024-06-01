@@ -1,0 +1,2 @@
+class ReviewPlant < ApplicationRecord
+end

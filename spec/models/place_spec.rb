@@ -67,13 +67,7 @@ RSpec.describe Place, type: :model do
     @place.valid?
     expect(@place.errors[:google_place_id]).to include("すでに同じが登録されています")
   end
-  #同じ緯度と経度を持つ場所が1つ以上存在しない状態であること
-  # it "is invalid same latitude and longitude" do
-  #   @place.latitude = 33.7856
-  #   @place.longitude = 132.715
-  #   @place.valid?
-  #   expect(@place.errors[:longitude]).to include("すでに同じが登録されています")
-  # end
+
 
   #pending "add some examples to (or delete) #{__FILE__}"
 end
